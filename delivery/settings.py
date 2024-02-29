@@ -12,22 +12,25 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from datetime import timedelta
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@f3=33v7^z%xdwh&wmnj%&ab+q=w45ta53^j^*1d%r@_%u)k85'
+
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ['DEBUG']
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS =['*', '127.0.0.1']
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
@@ -71,26 +74,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
     'allauth.account.middleware.AccountMiddleware',
-
-    # "django.middleware.common.CommonMiddleware",
 ]
-
-ALLOWED_HOSTS =['*', '127.0.0.1']
-# CORS_ALLOW_ALL_ORIGINS = True
-CORS_ORIGIN_ALLOW_ALL = True
-
-# CORS_ALLOWED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:3000']
-# CORS_ORIGIN_WHITELIST =['http://localhost:3000', 'http://127.0.0.1:3000']
-
 
 ROOT_URLCONF = 'delivery.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # 'DIRS': [],
         'DIRS': [BASE_DIR/'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -112,12 +103,12 @@ WSGI_APPLICATION = 'delivery.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'delivery',
-        'USER': 'postgres',
-        'PASSWORD': 'Doro',
-        'HOST': '127.0.0.1',
-        'PORT': '5433',
+        'ENGINE': os.environ['DB_ENGINE'],
+        'NAME': os.environ['DB_NAME'],
+        'USER': os.environ['DB_USER'],
+        'PASSWORD': os.environ['DB_PASSWORD'],
+        'HOST': os.environ['DB_HOST'],
+        'PORT': os.environ['DB_PORT'],
     }
 }
 
@@ -188,8 +179,9 @@ SOCIALACCOUNT_PROVIDERS = {
             'email'
         ],
         'APP': {
-            'client_id':'784276213954-h1rgrca8mo7mjf027rql1i50iu3cbidq.apps.googleusercontent.com',
-            'secret': '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',
+            'client_id': os.environ['CLIENTID'],
+
+            'secret': os.environ['CLIENTSECRET'],
         },
         'AUTH_PARAMS': {
             'access_type':'online',
@@ -207,14 +199,14 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'optional'
 
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
-LOGIN_URL = 'http://localhost:8000/api/auth/login'
+LOGIN_URL = os.environ['LOGIN_URL']
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'email@gmail.com'
-EMAIL_HOST_PASSWORD = '********'
-EMAIL_PORT = 587
+EMAIL_BACKEND = os.environ['EMAIL_BACKEND']
+EMAIL_USE_TLS = os.environ['EMAIL_USE_TLS']
+EMAIL_HOST = os.environ['EMAIL_HOST']
+EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+EMAIL_PORT = os.environ['EMAIL_PORT']
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=180),
@@ -248,9 +240,4 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
-CLIENTID = '784276213954-h1rgrca8mo7mjf027rql1i50iu3cbidq.apps.googleusercontent.com'
-CLIENTSECRET = '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'
 
-
-# https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=http://localhost:8000&prompt=consent&response_type=code&client_id=784276213954-h1rgrca8mo7mjf027rql1i50iu3cbidq.apps.googleusercontent.com&scope=openid%20email%20profile&access_type=offline
-# &client_id=784276213954-h1rgrca8mo7mjf027rql1i50iu3cbidq.apps.googleusercontent.com&

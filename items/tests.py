@@ -10,5 +10,4 @@ class ItemsTest(TestCase):
   
   def test_get_items(self):
     get_items = Items.objects.get(name="UG")
-    # print(">>>>>", get_items.name)
     self.assertEqual(get_items.name, "UG" )

@@ -41,7 +41,7 @@ urlpatterns = [
 
 ]
 
-# redirect the root URL of our site (i.e. 127.0.0.1:8000) to the URL 127.0.0.1:8000/catalog/.
+# redirect the root URL of our site (i.e. localhost:8000) to the URL localhost:8000/catalog/.
 urlpatterns += [
     path('', RedirectView.as_view(url='items/', permanent=True)),
 ]

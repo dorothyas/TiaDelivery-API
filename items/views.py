@@ -6,6 +6,5 @@ from .models import Items
 from .serializers import ItemsSerializer
 
 class ItemsViewSet(viewsets.ModelViewSet):
-  # permission_classes = [IsAuthenticated]
     serializer_class = ItemsSerializer
     queryset = Items.objects.all()
